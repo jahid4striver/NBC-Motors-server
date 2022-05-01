@@ -3,7 +3,8 @@ const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 5000;
 require('dotenv').config();
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId} = require('mongodb');
+// const ObjectId = require('mongodb').ObjectId;
 
 // Middleware
 
@@ -26,6 +27,13 @@ const run = async () => {
             const cursor = bikeCollection.find(query);
             const result = await cursor.toArray();
             res.send({success: 'Find Succesfully', data: result});
+        });
+
+        app.get('/bikes/:id', async(req, res)=>{
+            const id= req.params.id;
+            const query={_id: ObjectId(id)}
+            const result= await bikeCollection.findOne(query);;
+            res.send({success: 'Find One Successfully', data: result})
         })
 
 
