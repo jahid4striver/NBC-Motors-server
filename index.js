@@ -34,6 +34,29 @@ const run = async () => {
             const query={_id: ObjectId(id)}
             const result= await bikeCollection.findOne(query);;
             res.send({success: 'Find One Successfully', data: result})
+        });
+
+        app.put('/bikes/:id', async(req, res)=>{
+            const id= req.params.id;
+            const data= req.body;
+            console.log(data);
+            const filter={_id:ObjectId(id)};
+            const options = {upsert: true };
+            const updateDoc = {
+                $set: {
+                 quantity: data.quantity,
+                },
+              };
+            const result= await bikeCollection.updateOne(filter, updateDoc, options);
+            res.send(result);
+            
+        });
+
+        app.delete('/bikes/:id', async(req, res)=>{
+            const id= req.params.id;
+            const filter= {_id: ObjectId(id)};
+            const result= await bikeCollection.deleteOne(filter)
+            res.send(result);
         })
 
 
@@ -44,11 +67,6 @@ const run = async () => {
 
 run();
 
-// client.connect(err => {
-//   const collection = client.db("test").collection("devices");
-//   // perform actions on the collection object
-//   client.close();
-// });
 
 app.get('/', (req, res) => {
     res.send('NBC Server is Running')
