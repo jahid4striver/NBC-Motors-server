@@ -57,6 +57,13 @@ const run = async () => {
             const filter= {_id: ObjectId(id)};
             const result= await bikeCollection.deleteOne(filter)
             res.send(result);
+        });
+
+        app.post('/bikes', async(req, res)=>{
+            const newBikes= req.body;
+            const result= await bikeCollection.insertOne(newBikes);
+            console.log(result);
+            res.send(result)
         })
 
 
