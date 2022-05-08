@@ -20,6 +20,7 @@ const run = async () => {
     await client.connect();
     const bikeCollection = client.db('nbcMotors').collection('bikes');
     const salesCollection= client.db('nbcMotors').collection('sales');
+    const inquiryCollection= client.db('nbcMotors').collection('inquiry');
 
     try {
 
@@ -75,6 +76,12 @@ const run = async () => {
         app.post('/sales', async(req, res)=>{
             const newSales= req.body;
             const result= await salesCollection.insertOne(newSales);
+            console.log(result);
+            res.send(result)
+        })
+        app.post('/inquiry', async(req, res)=>{
+            const newInquiry= req.body;
+            const result= await inquiryCollection.insertOne(newInquiry);
             console.log(result);
             res.send(result)
         })
