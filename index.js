@@ -29,6 +29,12 @@ const run = async () => {
             const result = await cursor.toArray();
             res.send({success: 'Find Succesfully', data: result});
         });
+        app.get('/sales', async (req, res) => {
+            const query = {};
+            const cursor = salesCollection.find(query);
+            const result = await cursor.toArray();
+            res.send({success: 'Find Succesfully', data: result});
+        });
 
         app.get('/bikes/:id', async(req, res)=>{
             const id= req.params.id;
