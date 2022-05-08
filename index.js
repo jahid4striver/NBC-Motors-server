@@ -19,6 +19,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 const run = async () => {
     await client.connect();
     const bikeCollection = client.db('nbcMotors').collection('bikes');
+    const salesCollection= client.db('nbcMotors').collection('sales');
 
     try {
 
@@ -62,6 +63,12 @@ const run = async () => {
         app.post('/bikes', async(req, res)=>{
             const newBikes= req.body;
             const result= await bikeCollection.insertOne(newBikes);
+            console.log(result);
+            res.send(result)
+        })
+        app.post('/sales', async(req, res)=>{
+            const newSales= req.body;
+            const result= await salesCollection.insertOne(newSales);
             console.log(result);
             res.send(result)
         })
